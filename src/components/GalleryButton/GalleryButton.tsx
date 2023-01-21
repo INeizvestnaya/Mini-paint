@@ -1,11 +1,13 @@
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router';
 
+import { GALLERY } from '../../constants/routes';
+
 const GalleryButton: React.FC = () => {
   const navigate = useNavigate();
 
   const redirect = () => {
-    navigate('/gallery');
+    navigate(GALLERY);
   };
 
   return (

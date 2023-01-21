@@ -9,6 +9,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import Button from '@mui/material/Button';
 
 import { Tools } from '../../constants';
+import classes from './PanelTools.module.css';
 
 interface Props {
   selectTool: (tool: Tools) => void;
@@ -61,7 +62,7 @@ const PanelTools: React.FC<Props> = ({ selected, selectTool }) => {
           }}
           color={selected === type ? 'primary' : 'inherit'}
         >
-          <Component sx={{ fontSize: 35 }} />
+          <Component className={classes.tool} />
         </Button>
       ))}
     </>

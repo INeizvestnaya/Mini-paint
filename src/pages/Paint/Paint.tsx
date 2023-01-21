@@ -9,17 +9,18 @@ import Canvas from '../../components/Canvas';
 import GalleryButton from '../../components/GalleryButton';
 import HeaderBar from '../../components/HeaderBar';
 import ThemeChangeButton from '../../components/ThemeChangeButton';
+import { SIGN_IN } from '../../constants/routes';
 import { auth } from '../../firebase-config';
-import { RootState } from '../../redux';
+import { selectUser } from '../../redux/selectors';
 
 const Paint: React.FC = () => {
   const navigate = useNavigate();
 
-  const user = useSelector((state: RootState) => state.auth.user);
+  const user = useSelector(selectUser);
 
   const logout = async () => {
     try {
-      navigate('/sign-in');
+      navigate(SIGN_IN);
       await signOut(auth);
     } catch (error) {
       toast.error((error as Error).message);

@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Picture } from '../types';
@@ -35,7 +37,6 @@ const PicturesSlice = createSlice({
       }
     },
     setLoading(state, action) {
-      // eslint-disable-next-line no-param-reassign
       state.loading = action.payload.loading;
     }
   }

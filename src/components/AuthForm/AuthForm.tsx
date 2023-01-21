@@ -3,11 +3,30 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import React, { useState } from 'react';
+import { Fragment } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import { GALLERY } from '../../constants/routes';
 import { auth } from '../../firebase-config';
+import classes from './AuthForm.module.css';
+
+const emailRules = {
+  required: { value: true, message: 'Enter email address!' },
+  pattern: {
+    value: /^\S+?@\w+?\.\w+?$/,
+    message: 'Enter valid email address!'
+  }
+};
+
+const passwordRules = {
+  required: { value: true, message: 'Enter password!' },
+  minLength: {
+    value: 7,
+    message: 'Password must contain at least 7 characters!'
+  }
+};
 
 interface Props {
   submitCallback: Function;
@@ -18,6 +37,20 @@ interface Props {
   };
 }
 
+interface SubmitHandlerType {
+  email: string;
+  password: string;
+}
+
+type InputsType = Array<{
+  name: 'email' | 'password';
+  rules: typeof emailRules | typeof passwordRules;
+  label: string;
+  type?: string;
+  errorLabel?: string;
+  autoFocus: boolean;
+}>;
+
 const AuthForm: React.FC<Props> = ({
   submitCallback,
   formLabel,
@@ -25,64 +58,82 @@ const AuthForm: React.FC<Props> = ({
 }) => {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    reset
+  } = useForm({
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  });
 
-  const textFields = [
+  const inputs: InputsType = [
     {
-      label: 'Email address',
       name: 'email',
-      autoComplete: 'email',
+      rules: emailRules,
+      label: 'Email',
       autoFocus: true,
-      onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-        setEmail(event.target.value),
-      value: email
+      type: 'text',
+      errorLabel: errors.email?.message
     },
     {
-      label: 'Password',
       name: 'password',
+      rules: passwordRules,
+      label: 'Password',
+      autoFocus: false,
       type: 'password',
-      onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-        setPassword(event.target.value),
-      value: password
+      errorLabel: errors.password?.message
     }
   ];
 
-  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const submitHandler = async ({ email, password }: SubmitHandlerType) => {
     try {
       await submitCallback(auth, email, password);
-      navigate('/gallery');
+      navigate(GALLERY);
     } catch (error) {
       toast.error((error as Error).message);
 
-      setEmail('');
-      setPassword('');
+      reset();
     }
   };
 
   return (
     <Box
       component="form"
-      onSubmit={submitHandler}
-      sx={{ width: '50%', margin: '30px auto' }}
+      onSubmit={handleSubmit(submitHandler)}
+      className={classes.box}
     >
       <Typography component="h1" variant="h5">
         {formLabel}
       </Typography>
-      {textFields.map((field) => (
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          {...field}
-          key={field.name}
-        />
+      {inputs.map((input) => (
+        <Fragment key={input.name}>
+          <Controller
+            name={input.name}
+            control={control}
+            rules={input.rules}
+            render={({ field }) => (
+              <TextField
+                margin="normal"
+                fullWidth
+                label={input.label}
+                autoFocus={input.autoFocus}
+                type={input.type}
+                {...field}
+              />
+            )}
+          />
+          <Typography variant="caption" color="error">
+            {input.errorLabel}
+          </Typography>
+        </Fragment>
       ))}
       <Grid container alignItems="center">
-        <Grid item xs>
-          <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
+        <Grid item xs marginTop={3} marginBottom={2}>
+          <Button type="submit" variant="contained">
             {formLabel}
           </Button>
         </Grid>

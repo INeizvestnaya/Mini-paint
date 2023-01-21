@@ -2,13 +2,16 @@ import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ThemeModes } from '../../constants';
-import { RootState } from '../../redux';
+import { selectThemeMode } from '../../redux/selectors';
 import { toggleTheme } from '../../redux/ThemeSlice';
+
+const DARK = 'Dark';
+const LIGHT = 'Light';
 
 const ThemeChangeButton: React.FC = () => {
   const dispatch = useDispatch();
 
-  const themeMode = useSelector((state: RootState) => state.theme.palette.mode);
+  const themeMode = useSelector(selectThemeMode);
 
   const changeTheme = () => {
     dispatch(toggleTheme());
@@ -16,7 +19,7 @@ const ThemeChangeButton: React.FC = () => {
 
   return (
     <Button color="inherit" onClick={changeTheme}>
-      {themeMode === ThemeModes.light ? 'Dark' : 'Light'}
+      {themeMode === ThemeModes.light ? DARK : LIGHT}
     </Button>
   );
 };

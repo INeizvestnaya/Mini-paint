@@ -3,6 +3,7 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 import { Picture } from '../../types';
+import classes from './Pictures.module.css';
 
 interface Props {
   pictures: Picture[];
@@ -10,7 +11,7 @@ interface Props {
 }
 
 const Pictures: React.FC<Props> = ({ pictures }) => (
-  <ImageList cols={2} gap={10} sx={{ margin: 3 }}>
+  <ImageList cols={2} gap={10} className={classes.pictures}>
     {pictures.map((picture) => (
       <ImageListItem key={picture.nameId}>
         <img src={picture.url} alt={picture.name} loading="lazy" />

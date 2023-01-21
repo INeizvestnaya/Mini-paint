@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import { createSlice } from '@reduxjs/toolkit';
 
 import { auth } from '../firebase-config';
@@ -15,7 +17,6 @@ const AuthSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      // eslint-disable-next-line no-param-reassign
       state.user = action.payload.user;
     }
   }

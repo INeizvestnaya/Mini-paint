@@ -8,13 +8,14 @@ import { toast } from 'react-toastify';
 import { v4 as uuid } from 'uuid';
 
 import { INITIAL_COLOR, Tools } from '../../constants';
-import { RootState } from '../../redux';
+import { selectUser } from '../../redux/selectors';
 import { Color } from '../../types';
 import canvasService from '../../utils/CanvasService';
 import { addAuthor, addPicture } from '../../utils/firestoreActions';
 import PanelTools from '../PanelTools';
 import SavingDialog from '../SavingDialog';
 import WidthChanger from '../WidthChanger';
+import classes from './CanvasPanel.module.css';
 
 const storage = getStorage();
 
@@ -24,7 +25,7 @@ interface Props {
 }
 
 const CanvasPanel: React.FC<Props> = ({ selectTool, selected }) => {
-  const user = useSelector((state: RootState) => state.auth.user);
+  const user = useSelector(selectUser);
 
   const [color, setColor] = useState<Color>(INITIAL_COLOR);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -90,10 +91,7 @@ const CanvasPanel: React.FC<Props> = ({ selectTool, selected }) => {
         cancelSaving={cancelSaving}
         changePictureName={changePictureName}
       />
-      <Box
-        marginRight={2}
-        sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
-      >
+      <Box marginRight={2} className={classes.box}>
         <IconButton onClick={saveClick} color="inherit">
           <SaveIcon fontSize="large" />
         </IconButton>

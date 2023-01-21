@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+
 import { createSlice } from '@reduxjs/toolkit';
 
 import { ThemeModes } from '../constants';
@@ -20,10 +22,8 @@ const ThemeSlice = createSlice({
   reducers: {
     toggleTheme: (state) => {
       if (state.palette.mode === ThemeModes.light) {
-        // eslint-disable-next-line no-param-reassign
         state.palette.mode = ThemeModes.dark;
       } else {
-        // eslint-disable-next-line no-param-reassign
         state.palette.mode = ThemeModes.light;
       }
     }

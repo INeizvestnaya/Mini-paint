@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+import classes from './HeaderBar.module.css';
+
 interface Props {
   children: string | React.ReactNode;
   leftItem?: React.ReactNode;
@@ -19,7 +21,7 @@ const HeaderBar: React.FC<Props> = ({ children, leftItem, rightItem }) => (
           margin="normal"
           component="div"
           marginLeft={2}
-          sx={{ flexGrow: 1 }}
+          className={classes.box}
         >
           {children}
         </Typography>

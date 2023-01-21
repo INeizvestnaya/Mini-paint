@@ -1,6 +1,7 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { signOut } from 'firebase/auth';
@@ -12,16 +13,23 @@ import { toast } from 'react-toastify';
 import HeaderBar from '../../components/HeaderBar';
 import Pictures from '../../components/Pictures';
 import ThemeChangeButton from '../../components/ThemeChangeButton';
+import { PAINT, SIGN_IN } from '../../constants/routes';
 import { auth } from '../../firebase-config';
-import { RootState } from '../../redux';
+import {
+  selectAuthors,
+  selectLoading,
+  selectPictures,
+  selectUser
+} from '../../redux/selectors';
+import classes from './Gallery.module.css';
 
 const Gallery: React.FC = () => {
   const navigate = useNavigate();
 
-  const user = useSelector((state: RootState) => state.auth.user);
-  const loading = useSelector((state: RootState) => state.pictures.loading);
-  const pictures = useSelector((state: RootState) => state.pictures.pictures);
-  const authors = useSelector((state: RootState) => state.pictures.authors);
+  const user = useSelector(selectUser);
+  const loading = useSelector(selectLoading);
+  const pictures = useSelector(selectPictures);
+  const authors = useSelector(selectAuthors);
 
   const [filter, setFilter] = useState('');
   const [filteredPictures, setFilteredPictures] = useState(pictures);
@@ -44,7 +52,7 @@ const Gallery: React.FC = () => {
       children: 'Paint',
       sx: { display: user ? 'initial' : 'none' },
       onClick: () => {
-        navigate('/paint');
+        navigate(PAINT);
       }
     },
     {
@@ -52,8 +60,8 @@ const Gallery: React.FC = () => {
       sx: { display: user ? 'initial' : 'none' },
       onClick: async () => {
         try {
-          navigate('/sign-in');
           await signOut(auth);
+          navigate(SIGN_IN);
         } catch (error) {
           toast.error((error as Error).message);
         }
@@ -63,7 +71,7 @@ const Gallery: React.FC = () => {
       children: 'Sign-in',
       sx: { display: !user ? 'initial' : 'none' },
       onClick: () => {
-        navigate('/sign-in');
+        navigate(SIGN_IN);
       }
     }
   ];
@@ -90,9 +98,9 @@ const Gallery: React.FC = () => {
         </>
       </HeaderBar>
       {loading && (
-        <Typography margin={3} variant="h5">
-          Loading pictures...
-        </Typography>
+        <Box margin={5} className={classes.loader}>
+          <CircularProgress />
+        </Box>
       )}
       {!loading && !pictures.length && (
         <Typography margin={3} variant="h5">
@@ -101,10 +109,10 @@ const Gallery: React.FC = () => {
       )}
       {!loading && !!pictures.length && (
         <>
-          <Box margin={3} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Box margin={3} className={classes.box}>
             <Autocomplete
+              className={classes.autocomplete}
               options={authors}
-              sx={{ width: 300 }}
               inputValue={filter}
               onInputChange={filterChange}
               renderInput={(params) => <TextField {...params} label="Author" />}

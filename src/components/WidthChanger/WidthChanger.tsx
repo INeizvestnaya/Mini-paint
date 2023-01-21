@@ -6,6 +6,7 @@ import Slider from '@mui/material/Slider';
 import { useState } from 'react';
 
 import canvasService from '../../utils/CanvasService';
+import classes from './WidthChanger.module.css';
 
 const WidthChanger: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -31,7 +32,7 @@ const WidthChanger: React.FC = () => {
         <CircleIcon />
       </IconButton>
       <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={handleClose}>
-        <MenuItem sx={{ width: 200 }}>
+        <MenuItem className={classes.slider}>
           <Slider
             min={1}
             max={10}

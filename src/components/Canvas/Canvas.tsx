@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Tools } from '../../constants';
 import canvasService from '../../utils/CanvasService';
 import CanvasPanel from '../CanvasPanel';
+import classes from './Canvas.module.css';
 
 const Canvas: React.FC = () => {
   const [selectedTool, setSelectedTool] = useState<Tools | null>(null);
@@ -53,7 +54,7 @@ const Canvas: React.FC = () => {
   };
 
   return (
-    <Box margin={2} sx={{ display: 'flex' }}>
+    <Box margin={2} className={classes.box}>
       <CanvasPanel selectTool={selectTool} selected={selectedTool} />
       <canvas
         width="1000px"

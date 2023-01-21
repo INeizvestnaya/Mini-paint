@@ -98,7 +98,7 @@ A JavaScript linter. It helps to write cleaner code, checks it for the mistakes 
 
 A code formatter to write code in same style everywhere.
 
-### FIrebase
+### Firebase
 
 A database to store data.
 
@@ -109,6 +109,10 @@ A libarary to generate unique ids.
 ### husky
 
 A tool to make git hooks.
+
+### react-hook-form
+
+A library for forms manipulation and validation.
 
 ## Folders of the application
 
@@ -147,6 +151,10 @@ Contains pages (url routed) of the application.
 ### src/redux
 
 Contains redux logic.
+
+### src/routes
+
+Contains router logic of the application.
 
 ### src/types
 
