@@ -1,46 +1,165 @@
-# Getting Started with Create React App
+# Mini-paint project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is to-do list, where you can create tasks for any day and 
+check and uncheck this tasks.
 
-## Available Scripts
+## Task
 
-In the project directory, you can run:
+https://drive.google.com/file/d/19cb4whI_HUVPzuaPyaj5r6hGotIVnhho/view
 
-### `npm start`
+## How to run the app
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+If you don't have git, install it.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Clone the repository.
 
-### `npm test`
+If you don't have node.js, install it from the official site.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Type
 
-### `npm run build`
+```
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+to install all the dependencies of the project.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This project uses firebase as a storage of pictures and their info.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+You should write down your Firebase config.
 
-### `npm run eject`
+Register on firebase.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Find .env.example file, use it as a template.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+(This file contains my data)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Create .env file near it and write your firebase config data there in the same way as it's written in the example file.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Then type 
 
-## Learn More
+```
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+in the console, directed to the root folder of the project.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This command will run the app and open it in your browser.
+
+The last step is registration in the app when you run it.
+
+## Database snapshot
+
+Data in this firebase project in stored in Firestore Database which is noSQL database.
+There are collections and docs.
+
+The main collections are "pictures" and "authors". They have documents for every picture and author.
+
+Actions for setting the documents are stored in utils/firestoreActions.ts file
+
+Files of pictures are stored in Firebase Storage in "pictures" folder
+
+### Adding picture
+
+When you are adding a picture it is saved in Firebase Storage.
+
+At the same time name, author and unique id to refer to the storage are saved in Firestore database.
+
+The author is also saved in separate collection because you need to have a list of all authors to filter them.
+
+## Application stack
+
+All used libraries are listed in dependencies and devDependencies in package.json file.
+
+### React
+
+A JavaScript library for creating user interfaces.
+
+### Typescript
+
+A programming language which is compiled into JavaScript and adds typing system to it.
+
+### Material UI (MUI)
+
+A library for react which simplifies creating UI and styles. It defines components such as buttons, labels, menus, icons.
+
+### Redux
+
+A state management system for react. Helps to store react state data in one place and manage it easily.
+
+### React-toastify
+
+A library for creating notifications when an error occurs during authorization.
+
+### Eslint
+
+A JavaScript linter. It helps to write cleaner code, checks it for the mistakes and enforces correct code style.
+
+### Prettier
+
+A code formatter to write code in same style everywhere.
+
+### Firebase
+
+A database to store data.
+
+### Uuid
+
+A libarary to generate unique ids.
+
+### husky
+
+A tool to make git hooks.
+
+### react-hook-form
+
+A library for forms manipulation and validation.
+
+## Folders of the application
+
+### .husky
+
+Configuration files for a pre-push hook.
+
+It doesn't allow you to push anything when there are EsLint errors in the project.
+
+### node_modules
+
+Modules of the app. They are installed with npm and are ignored by git.
+
+### src
+
+Source folder of application and configuration files. It contains files written by developers of the app.
+
+Contains TypeScript (.ts, .tsx) files. .tsx files are used for react library.
+
+### src/components
+
+Contains other react components.
+
+### src/constants
+
+Stores constants used in multiple files of the application.
+
+### src/hooks
+
+Stores custom hooks used by react library.
+
+### src/pages 
+
+Contains pages (url routed) of the application.
+
+### src/redux
+
+Contains redux logic.
+
+### src/routes
+
+Contains router logic of the application.
+
+### src/types
+
+Stores TypeScript types used in multiple files of the application.
+
+### src/utils
+
+Contains different helper functions.
